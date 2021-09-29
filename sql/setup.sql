@@ -1,0 +1,12 @@
+DROP TABLE IF EXISTS repos;
+
+CREATE TABLE repos (
+  id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+  author TEXT NOT NULL,
+  repo_name TEXT NOT NULL,
+  description_name TEXT NOT NULL,
+  url_name TEXT NOT NULL,
+  stars INTEGER NOT NULL,
+  forks INTEGER NOT NULL,
+  language_name TEXT NOT NULL
+);
