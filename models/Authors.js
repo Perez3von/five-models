@@ -1,58 +1,58 @@
 import pool from '../lib/utils/pool.js';
 
-export default class Repository {
+export default class Authors {
   constructor(row) {
     this.id = row.id;
-    this.name = row.repo_name;
+    this.author = row.author;
   }
   //--------------------------------------------------------//
-  static async insertRepos({ name }) {
+ 
+  static async insertAuthors({ author }) {
     const { rows } = await pool.query(
-      'INSERT INTO repos (repo_name) VALUES ($1) RETURNING *',
-      [name]
+      'INSERT INTO authors (author) VALUES ($1) RETURNING *',
+      [author]
     );
-    return new Repository(rows[0]);
+    return new Authors(rows[0]);
   }
   //--------------------------------------------------------//
 
-  
-  static async getRepo(repo_id) {
+  static async getAuthor(repo_id) {
     const { rows } = await pool.query(
-      'SELECT * FROM repos WHERE repos.id= $1', [repo_id]
+      'SELECT * FROM authors WHERE authors.id= $1', [repo_id]
     );
-    return new Repository(rows[0]);
+    return new Authors(rows[0]);
+
   }
   //--------------------------------------------------------//
-
-  static async getAllRepo() {
+  static async getAllAuthors() {
     const { rows } = await pool.query(
-      'SELECT * FROM repos'
+      'SELECT * FROM authors'
     );
     return rows;
   }
 
   //--------------------------------------------------------//
-  static async updateRepo(repo_id, repo_name) {
+  static async updateAuthor(author_id, author_name) {
     
     const { rows } = await pool.query(
-      'UPDATE repos SET repo_name = $2 WHERE id = $1 RETURNING *', [repo_id, repo_name]
+      'UPDATE authors SET author = $2 WHERE id = $1 RETURNING *', [author_id, author_name]
     );
-    return new Repository(rows[0]);
+    return new Authors(rows[0]);
   }
   //--------------------------------------------------------//
-
-  static async addToRepo(value) {
+  static async addToAuthors(value) {
     const { rows } = await pool.query(
-      'INSERT INTO repos (repo_name) VALUES ($1) RETURNING *', [value]
+      'INSERT INTO authors (author) VALUES ($1)', [value]
     );
-    return new Repository(rows[0]);
+    return new Authors(rows[0]);
   }
-
   //--------------------------------------------------------//
-  static async deleteRepo(repo_id) {
+
+
+  static async deleteAuthor(repo_id) {
   
     const { rows } = await pool.query(
-      'DELETE FROM repos WHERE id = $1', [repo_id]
+      'DELETE FROM authors WHERE id = $1', [repo_id]
     );
   }
   //--------------------------------------------------------//

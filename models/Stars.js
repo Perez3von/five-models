@@ -1,58 +1,58 @@
 import pool from '../lib/utils/pool.js';
 
-export default class Repository {
+export default class Stars {
   constructor(row) {
     this.id = row.id;
-    this.name = row.repo_name;
+    this.star = row.stars;
   }
   //--------------------------------------------------------//
-  static async insertRepos({ name }) {
+ 
+  static async insertStars({ stars }) {
     const { rows } = await pool.query(
-      'INSERT INTO repos (repo_name) VALUES ($1) RETURNING *',
-      [name]
+      'INSERT INTO stars (stars) VALUES ($1) RETURNING *',
+      [stars]
     );
-    return new Repository(rows[0]);
+    return new Stars(rows[0]);
   }
   //--------------------------------------------------------//
 
-  
-  static async getRepo(repo_id) {
+  static async getStar(repo_id) {
     const { rows } = await pool.query(
-      'SELECT * FROM repos WHERE repos.id= $1', [repo_id]
+      'SELECT * FROM stars WHERE stars.id= $1', [repo_id]
     );
-    return new Repository(rows[0]);
+    return new Stars(rows[0]);
+
   }
   //--------------------------------------------------------//
-
-  static async getAllRepo() {
+  static async getAllStars() {
     const { rows } = await pool.query(
-      'SELECT * FROM repos'
+      'SELECT * FROM stars'
     );
     return rows;
   }
 
   //--------------------------------------------------------//
-  static async updateRepo(repo_id, repo_name) {
+  static async updateStar(star_id, val) {
     
     const { rows } = await pool.query(
-      'UPDATE repos SET repo_name = $2 WHERE id = $1 RETURNING *', [repo_id, repo_name]
+      'UPDATE stars SET stars = $2 WHERE id = $1 RETURNING *', [star_id, val]
     );
-    return new Repository(rows[0]);
+    return new Stars(rows[0]);
   }
   //--------------------------------------------------------//
-
-  static async addToRepo(value) {
+  static async addToStars(value) {
     const { rows } = await pool.query(
-      'INSERT INTO repos (repo_name) VALUES ($1) RETURNING *', [value]
+      'INSERT INTO stars (stars) VALUES ($1)', [value]
     );
-    return new Repository(rows[0]);
+    return new Stars(rows[0]);
   }
-
   //--------------------------------------------------------//
-  static async deleteRepo(repo_id) {
+
+
+  static async deleteStar(repo_id) {
   
     const { rows } = await pool.query(
-      'DELETE FROM repos WHERE id = $1', [repo_id]
+      'DELETE FROM stars WHERE id = $1', [repo_id]
     );
   }
   //--------------------------------------------------------//
