@@ -11,7 +11,7 @@ describe('demo routes', () => {
   it('gets api repo data', async () => {
     const api_data = await apiCall();
     const res = await request(app).get('/api/repos');
-    expect(api_data).toEqual(res);
+    expect(api_data).toEqual(res.body);
   });
    
   //--------------------------------------------//
